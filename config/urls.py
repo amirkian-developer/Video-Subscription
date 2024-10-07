@@ -1,15 +1,25 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
+from video_subscription.views import *
+from video_subscription.viewsets import *
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register(r'subscriptions', SubscriptionViewSet, 'subscription')
+router.register(r'videos', VideoViewSet, 'video')
+router.register(r'manage/videos', ManageVideoViewSet, 'manage-video')
+router.register(r'manage/licenses', ManageLicenseViewSet, 'manage-license')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('video_subscription.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/', include(router.urls)),
+
+    path('api/signup/', SignUpView.as_view(), name='auth_signup'),
+    path('api/profile/', ProfileListView.as_view(), name='profile'),
+    path('api/profile/<int:pk>/', ProfileDetailView.as_view(), name='profile-detail'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

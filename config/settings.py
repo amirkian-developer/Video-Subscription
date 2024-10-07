@@ -1,6 +1,6 @@
 from pathlib import Path
 from decouple import config
-
+import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -16,6 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    # 'rest_framework_simplejwt',
     'video_subscription',
 ]
 
@@ -91,4 +93,24 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AUTH_USER_MODEL = 'video_subscription.VideoUser'
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ),
+    # 'DEFAULT_PAGINATION_CLASS': 'video_subscription.pagination.IdBasedCursorPagination',
+    # 'PAGE_SIZE': 10,
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '5/minute',
+    #     'user': '10/minute',
+    # },
+}
+
+ROOT_URLCONF = 'config.urls'
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(hours=24),
+}
 
