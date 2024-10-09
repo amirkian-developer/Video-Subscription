@@ -80,13 +80,42 @@ class VideoUserSerializer(serializers.HyperlinkedModelSerializer):
         return user
 
 
-# class LicenseSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = License
-#         fields = ['id', 'title', 'duration', 'price', 'url']
-#         extra_kwargs = {
-#             'url': {'view_name': 'license-detail', 'lookup_field':'pk'}
-#         }
+
+class LicenseSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = License
+        fields = ['id', 'title', 'duration', 'price', 'url']
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['id', 'user', 'video', 'created_at', 'text']
+
+
+class RateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rate
+        fields = ['id', 'user', 'video', 'created_at', 'rate']
+
+
+class WatchHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WatchHistory
+        fields = ['id', 'user', 'video', 'watched_at']
+
+
+class VideoUserReadOnlySerializer(serializers.HyperlinkedModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    first_name = serializers.CharField(source='user.first_name', read_only=True)
+    last_name = serializers.CharField(source='user.last_name', read_only=True)
+    licenses = LicenseSerializer(many=True)
+
+    class Meta:
+        model = VideoUser
+        fields = ('id', 'username', 'first_name', 'last_name', 'licenses', 'url')
+        read_only_fields = ['user',]
+
 
 
 class VideoSerializer(serializers.HyperlinkedModelSerializer):

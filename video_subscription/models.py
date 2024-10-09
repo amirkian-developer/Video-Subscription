@@ -73,3 +73,20 @@ class WatchHistory(models.Model):
     def __str__(self):
         return self.user.__str__()+" - "+self.video.title
 
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(VideoUser, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+
+
+class Rate(models.Model):
+    user = models.ForeignKey(VideoUser, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    rate = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ('user', 'video')

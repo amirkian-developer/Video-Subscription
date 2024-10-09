@@ -8,8 +8,11 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'subscriptions', SubscriptionViewSet, 'subscription')
 router.register(r'videos', VideoViewSet, 'video')
+router.register(r'watch-history', WatchHistoryViewSet)
 router.register(r'manage/videos', ManageVideoViewSet, 'manage-video')
 router.register(r'manage/licenses', ManageLicenseViewSet, 'manage-license')
+router.register(r'users', VideoUserViewSet, )
+router.register(r'licenses', LicenseViewSet, )
 
 
 urlpatterns = [
