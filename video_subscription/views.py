@@ -12,7 +12,7 @@ class ProfileListView(generics.ListAPIView):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
-    
+
 
 class ProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = VideoUser.objects.all()
@@ -28,3 +28,11 @@ class SignUpView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = SignUpSerializer
 
+
+class ProfileAddBalanceView(generics.CreateAPIView):
+    queryset = VideoUser.objects.all()
+    serializer_class = AddBalanceSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)

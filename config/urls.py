@@ -23,6 +23,7 @@ urlpatterns = [
     path('api/signup/', SignUpView.as_view(), name='auth_signup'),
     path('api/profile/', ProfileListView.as_view(), name='profile'),
     path('api/profile/<int:pk>/', ProfileDetailView.as_view(), name='profile-detail'),
+    path('api/profile/<int:pk>/add_balance/', ProfileAddBalanceView.as_view(), name='profile-add-balance'),
 ]
 
 

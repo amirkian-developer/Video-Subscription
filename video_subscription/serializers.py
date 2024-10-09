@@ -105,6 +105,21 @@ class WatchHistorySerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'video', 'watched_at']
 
 
+class AddBalanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoUser
+        fields = ['id', 'balance']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        user = request.user.videouser
+        user.balance += validated_data['balance']
+        user.save()
+
+        return user
+
+
+
 class VideoUserReadOnlySerializer(serializers.HyperlinkedModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     first_name = serializers.CharField(source='user.first_name', read_only=True)
